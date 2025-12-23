@@ -3,7 +3,7 @@
 Este proyecto es una API REST profesional diseñada para la gestión integral de salas de coworking y reservas de espacios de trabajo. La solución utiliza un stack tecnológico moderno basado en Java 17, Spring Boot 3, PostgreSQL y Docker.
 
 ## 1. Instrucciones para ejecutar el proyecto (Paso a paso)
-   Siga estos pasos para poner el sistema en marcha
+   Siga estos pasos para poner el sistema en marcha:
 
 **Descarga y Preparación:**
 
@@ -23,11 +23,9 @@ Este proyecto es una API REST profesional diseñada para la gestión integral de
 
 - IMPORTANTE: Si es la primera vez que lo ejecuta o desea una base de datos limpia, ejecute primero:
 
-- docker-compose down -v (Esto elimina volúmenes previos y evita conflictos de esquema).
+- `docker-compose down -v` (Esto elimina volúmenes previos y evita conflictos de esquema).
 
-Inicie el sistema con el comando:
-
-- docker-compose up --build.
+- Inicie el sistema con el comando `docker-compose up --build`.
 
 Espere a que el proceso termine. Sabrá que está listo cuando en Docker Desktop vea los contenedores spring_app y postgres_db en verde.
 
@@ -52,15 +50,15 @@ Para ver la información real, debe ingresar a las siguientes rutas en su navega
 
 Se implementó una estructura clara (Controller, Service, Repository, Model) para separar la lógica de negocio del acceso a datos, facilitando el mantenimiento.
 
-* **Optimización de Respuesta JSON:** Se utilizó la anotación @JsonInclude(JsonInclude.Include.NON_NULL) en el modelo Sala. Esto garantiza que las respuestas sean limpias y profesionales, omitiendo campos nulos innecesarios y mostrando solo el id vinculado al momento de registrar una reserva.
+* **Optimización de Respuesta JSON:** Se utilizó la anotación `@JsonInclude(JsonInclude.Include.NON_NULL`) en el modelo Sala. Esto garantiza que las respuestas sean limpias y profesionales, omitiendo campos nulos innecesarios y mostrando solo el id vinculado al momento de registrar una reserva.
 
-* **Integridad Referencial:** Se estableció una relación @ManyToOne en la entidad Reserva para asegurar un vínculo sólido y eficiente con la entidad Sala.
+* **Integridad Referencial:** Se estableció una relación `@ManyToOne` en la entidad Reserva para asegurar un vínculo sólido y eficiente con la entidad Sala.
 
 ## 5. Suposiciones Realizadas
 
 - **Flujo de Usuario:** Se asume que el cliente conoce el id de la sala disponible al momento de realizar el registro de una reserva.
 * **Atributo de Estado:** El campo estado en la Sala se asume como informativo ("disponible", "en mantenimiento") para que el administrador gestione la disponibilidad.
-* **Estándar Temporal:** Se utiliza el formato ISO 8601 (YYYY-MM-DDTHH:mm:ss) para el manejo de fechas, garantizando compatibilidad técnica global.
+* **Estándar Temporal:** Se utiliza el formato ISO 8601 (`YYYY-MM-DDTHH:mm:ss`) para el manejo de fechas, garantizando compatibilidad técnica global.
 
 ## 6. Guía de Evaluación Manual (Paso a Paso)
 
@@ -131,19 +129,22 @@ Nota: El sistema devolverá la reserva confirmada mostrando solo el ID de la sal
 Finalmente, se puede validar que los filtros funcionan ingresando estas direcciones directamente en su navegador:
 
 * Filtrar por Capacidad (Mínimo 20 personas): 
+
 GET http://localhost:8080/api/salas?capacidadMinima=20 (Solo debe aparecer la Sala A).
 
 * Filtrar por Estado (En mantenimiento): 
+
 GET http://localhost:8080/api/salas?estado=en+mantenimiento (Solo debe aparecer la Sala C).
 
 * Ver todas las Reservas registradas: 
+
 GET http://localhost:8080/api/reservas (Debe aparecer la reserva de Ana Martínez vinculada a la Sala 1).
 
-# **6.1 Pruebas de Validación y Robustez (Casos de Error)**
+### 6.1 Pruebas de Validación y Robustez (Casos de Error)
 
 Un sistema profesional debe prevenir datos incorrectos. El evaluador puede verificar la robustez de la API realizando estas pruebas de error:
 
-**A. Validación de Datos Obligatorios (DNI)**
+#### A. Validación de Datos Obligatorios (DNI)
 
 * **Acción:** Intentar registrar una reserva omitiendo el campo dniResponsable.
 
