@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user_armadillo
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: coworking_db
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: spring_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/coworking_db
+      SPRING_DATASOURCE_USERNAME: user_armadillo
+      SPRING_DATASOURCE_PASSWORD: password123
